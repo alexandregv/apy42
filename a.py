@@ -14,7 +14,7 @@ api = OAuth2Session(client=client)
 token = api.fetch_token(token_url='https://api.intra.42.fr/oauth/token', client_id=client_id, client_secret=client_secret)
 
 if len(sys.argv) <= 1:
-    endpoint = raw_input()
+    endpoint = raw_input("> https://api.intra.42.fr/v2/")
 else:
     endpoint = sys.argv[1]
 
