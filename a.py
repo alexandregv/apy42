@@ -5,6 +5,7 @@ from pygments import highlight, lexers, formatters
 import sys
 import json
 import os
+import readline
 
 client_id = os.environ['API42_ID']
 client_secret = os.environ['API42_SECRET']
