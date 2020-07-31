@@ -20,5 +20,8 @@ else:
 
 response = api.get('https://api.intra.42.fr/v2/' + endpoint)
 raw_json = response.content
-colored_json = highlight(json.dumps(json.loads(raw_json), indent=2, ensure_ascii=False), lexers.JsonLexer(), formatters.TerminalFormatter())
-print(colored_json)
+if sys.stdout.isatty():
+    colored_json = highlight(json.dumps(json.loads(raw_json), indent=2, ensure_ascii=False), lexers.JsonLexer(), formatters.TerminalFormatter())
+    print(colored_json)
+else:
+    print(raw_json.decode())
