@@ -7,5 +7,6 @@
 
 # Usage
 
-- With arguments: `python a.py /users/reach`
-- Interactively: `python a.py` then type `/users/reach`
+1) `export 42API_ID=xxx 42API_SECRET=xxx`
+2) - With arguments: `python a.py /users/reach`
+   - Interactively: `python a.py` then type `/users/reach`
