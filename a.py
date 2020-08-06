@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from requests_oauthlib import OAuth2Session
 from oauthlib.oauth2 import BackendApplicationClient
 from pygments import highlight, lexers, formatters
@@ -32,4 +34,4 @@ if tty:
     colored_json = highlight(json.dumps(json.loads(raw_json), indent=2, ensure_ascii=False), lexers.JsonLexer(), formatters.TerminalFormatter())
     print(colored_json)
 else:
-    print(raw_json.decode())
+    print(raw_json.decode('utf-8'))
