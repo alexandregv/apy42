@@ -11,15 +11,22 @@ import time
 import readline
 from builtins import input
 
+
 def call(api, endpoint):
     response = api.get('https://api.intra.42.fr/v2/' + endpoint)
     raw_json = response.content
+    return raw_json
 
+
+def print_results(raw_json):
     if sys.stdout.isatty():
         colored_json = highlight(json.dumps(json.loads(raw_json), indent=2, ensure_ascii=False), lexers.JsonLexer(), formatters.TerminalFormatter())
         print(colored_json)
     else:
-        print(raw_json.decode('utf-8'))
+        if isinstance(raw_json, str):
+            print(raw_json)
+        else:
+            print(raw_json.decode('utf-8'))
 
 
 def prompt(api):
@@ -27,14 +34,14 @@ def prompt(api):
         if sys.stdout.isatty():
             sys.stderr.write(str("\033[91m> https://api.intra.42.fr/v2/\033[0m"))
         endpoint = input()
-        call(api, endpoint)
+        print_results(call(api, endpoint))
         prompt(api)
     else:
         endpoint = sys.argv[1]
-        call(api, endpoint)
+        print_results(call(api, endpoint))
 
 
-def main():
+def init_api():
     client_id = os.environ['API42_ID']
     client_secret = os.environ['API42_SECRET']
 
@@ -42,11 +49,12 @@ def main():
     api = OAuth2Session(client=client)
     token = api.fetch_token(token_url='https://api.intra.42.fr/oauth/token', client_id=client_id, client_secret=client_secret)
 
-    prompt(api)
+    return(api)
 
 
 if __name__ == "__main__":
     try:
-        main()
+        api = init_api()
+        prompt(api)
     except KeyboardInterrupt:
         sys.exit()
